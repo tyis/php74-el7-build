@@ -53,7 +53,10 @@ chmod +x build.sh
 
 ## 成果物と検証結果（2026-11-25 実施）
 
-ビルド済み RPM は [Releases（v7.4.33-33）](https://github.com/tyis/php74-el7-build/releases/tag/v7.4.33-33) に置いています。
+ビルド済み RPM は [Releases（v7.4.33-33）](https://github.com/tyis/php74-el7-build/releases/tag/v7.4.33-33) で案内しています。
+
+- RPM 一式（35個＋SRPM＋SHA256SUMS.txt）の tar.gz: [php-7.4.33-33.el7-rpms.tar.gz](https://muse.ai/files/1472204205978203/1184804573874802/a1w60xnhnv6x90j0xg1qwrgw/php-7.4.33-33.el7-rpms.tar.gz)
+  - 当方のブラウザ環境では GitHub へのファイル添付が管理者ポリシーで遮断されたため、当面このリンクで配布します
 
 - 生成 RPM: x86_64 **35個**（約71MB）＋ SRPM 1個
 - ビルド所要時間: 約83分（小規模 VM での実績。環境により大きく変動します）
