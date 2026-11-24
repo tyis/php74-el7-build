@@ -83,5 +83,5 @@ yum swap postgresql-libs libpq5
 
 ## 関連
 
-- ブログ解説記事: [PHP 7.4.33-31をCentOS 7でビルドする](https://blog.tyis.co.jp/2026/10/28/php74-33-31-centos7-build-guide/)
+- ブログ解説記事: [PHP 7.4.33-33をCentOS 7でビルドする](https://blog.tyis.co.jp/%E3%82%BB%E3%82%AD%E3%83%A5%E3%83%AA%E3%83%86%E3%82%A3/%E3%82%B5%E3%83%BC%E3%83%90%E3%83%BC%E9%81%8B%E7%94%A8/php/php74-33-33-centos7-build-guide/)
 - 会社サイト: https://www.tyis.co.jp/
