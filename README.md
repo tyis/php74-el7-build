@@ -1,0 +1,66 @@
+# php74-el7-build
+
+CentOS 7 (EL7) 向けに、Remi リポジトリの PHP 7.4.33 SRPM（リビジョン -33）をビルドするスクリプトと成果物です。
+
+PHP 7.4 は公式サポートが終了しており、2026年11月に公開された脆弱性（Critical を含む18件）に対する公式修正は 7.4 には提供されません。Remi が公開する 7.4.33 の新しいリビジョンには、それらの修正バックポートが含まれます。本リポジトリは、その最新リビジョン -33 を CentOS 7 上でビルドできるようにしたものです。
+
+## 環境準備
+
+スクリプトは CentOS 7 の中で動かすものです。ホスト側に CentOS 7 が無くても、Docker があれば始められます。
+
+### Docker を使う場合（推奨）
+
+```bash
+# ホスト側
+docker run -it --name php74build centos:7
+```
+
+コンテナに入ったら、その中で以下の「使い方」に進みます。成果物を取り出す場合は、別ターミナルから：
+
+```bash
+docker cp php74build:/root/rpmbuild/RPMS ./RPMS
+```
+
+### 必要なもの
+
+- CentOS 7 / RHEL 7 環境（コンテナ・VM・実機いずれも可）
+- root 権限
+- ネットワーク接続（vault.centos.org、Fedora アーカイブ、Remi、PGDG へアクセスします）
+- 空きディスク 約10GB、所要時間 約1時間（CPU性能により前後します）
+
+## 使い方
+
+```bash
+curl -LO https://raw.githubusercontent.com/tyis/php74-el7-build/main/build.sh
+chmod +x build.sh
+./build.sh
+```
+
+完了すると、RPM が `~/rpmbuild/RPMS/x86_64/` に出力されます。
+
+## EL7 向けの調整内容
+
+素の CentOS 7 ではそのままビルドできないため、スクリプト内で次の調整を行っています。
+
+1. **EOL 対応**: CentOS 7 はサポート終了のため、標準リポジトリを vault.centos.org（7.9.2009）、EPEL を Fedora アーカイブへ向け直します。
+2. **SRPM の展開方法**: Remi の SRPM は Rich Dependencies を使うため EL7 の rpm ではインストールできず、`rpm2cpio` で展開します。
+3. **spec の調整（4か所）**:
+   - `with_libgd` を 0 に（バンドル版ではなくシステムの libgd を使用）
+   - `oniguruma5php-devel` → `oniguruma-devel`（EPEL のパッケージ名に合わせる）
+   - ICU のバージョン制約を除去（EL7 の ICU は 50 ですが、spec は -31 で `>= 74`、-33 で `>= 78` を要求します。バージョン番号に依存しない正規表現で除去するため、リビジョンが変わっても使えます）
+   - `libpq-devel` → `libpq5-devel`（-33 で `postgresql-devel` から変更されましたが、その名前のパッケージは EL7 のリポジトリに存在せず、PGDG リポジトリの `libpq5-devel` が実体です）
+4. **PGDG リポジトリの追加**: 上記 `libpq5-devel` の取得元として PostgreSQL 公式 PGDG（EL7 向け 15）を追加します。
+
+## 成果物
+
+ビルド済み RPM は GitHub Releases に置きます。検証結果（生成 RPM 数、テスト結果、クリーン環境へのインストール確認）は検証完了後にここへ追記します。
+
+## 注意
+
+- PHP 7.4 は EOL です。本ビルドは移行までの暫定対応としてご利用ください。
+- Remi SRPM のライセンス・商標は各権利者に帰属します。本リポジトリは東洋インターネットサービス株式会社によるビルド手順の公開です。
+
+## 関連
+
+- ブログ解説記事: [PHP 7.4.33-31をCentOS 7でビルドする](https://blog.tyis.co.jp/2026/10/28/php74-33-31-centos7-build-guide/)
+- 会社サイト: https://www.tyis.co.jp/
