@@ -19,6 +19,16 @@
 set -e
 cd "$(dirname "$0")"
 
+# --- 0. Preflight ------------------------------------------------------------
+# Prerequisites: a CentOS 7 environment (e.g. `docker run -it centos:7`),
+# root inside it, network access, ~10 GB free disk, ~1 hour.
+if [ "$(id -u)" != "0" ]; then
+  echo "Please run as root (inside the CentOS 7 environment)." >&2; exit 1
+fi
+if ! grep -q "release 7" /etc/redhat-release 2>/dev/null; then
+  echo "This script must run on CentOS 7 / RHEL 7." >&2; exit 1
+fi
+
 SRPM=php-7.4.33-33.remi.src.rpm
 
 # --- 1. Repositories -------------------------------------------------------
@@ -69,7 +79,7 @@ enabled=1
 gpgcheck=0
 EOF
 
-yum -y install rpm-build yum-utils cpio gcc gcc-c++ make
+yum -y install rpm-build yum-utils cpio gcc gcc-c++ make curl
 
 # --- 2. Extract the SRPM ---------------------------------------------------
 mkdir -p ~/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS} ~/work
