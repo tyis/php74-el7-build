@@ -55,6 +55,10 @@ chmod +x build.sh
 
 ビルド済み RPM は [Releases（v7.4.33-33）](https://github.com/tyis/php74-el7-build/releases/tag/v7.4.33-33) に添付しています（RPM 35個＋SRPM、個別にダウンロードできます）。
 
+### -32 の RPM もあります（libpq へ切り替えたくない環境向け）
+
+-33 の libpq 切り替え（導入時の `yum swap postgresql-libs libpq5`）を避けたい環境向けに、1つ前のリビジョン **-32** の RPM もビルドして [Releases（v7.4.33-32）](https://github.com/tyis/php74-el7-build/releases/tag/v7.4.33-32) に添付しています。-32 は11月公開の脆弱性12件のバックポートを含み（セキュリティ内容は -33 と同一）、php-pgsql は CentOS 7 標準の `postgresql-libs`（9.2）の libpq でそのまま動作します（PGDG リポジトリ・swap ともに不要）。クリーンな CentOS 7.9 での導入検証済みです（PHP 7.4.33、モジュール70個、php-fpm 設定テスト成功、起動時警告なし）。ビルド時の spec 調整は libgd・oniguruma・ICU の3か所のみで、libpq の調整は含みません。
+
 - 生成 RPM: x86_64 **35個**（約71MB）＋ SRPM 1個
 - ビルド所要時間: 約83分（小規模 VM での実績。環境により大きく変動します）
 - `%check` テストスイート: 総数 15,967件／実行 9,158件／**パス 9,116件**／失敗 1件／スキップ 6,809件
