@@ -42,7 +42,7 @@ PHP 7.4 は公式サポートが終了（EOL）しており、2026年11月に公
 
 ## 自分でビルドする
 
-同梱の `build.sh` は **-33 用**です。-32 をビルドする場合は、後述の調整のうち libpq に関する2点（spec の `libpq-devel` 書き換えと PGDG リポジトリ追加）が不要になります。
+ビルドスクリプトはリビジョン別に用意しています（`build-7.4.33-33.sh` / `build-7.4.33-32.sh`）。違いは libpq に関する調整の有無だけで、-32 用には spec の `libpq-devel` 書き換えと PGDG リポジトリ追加が入っていません。
 
 ### 環境準備
 
@@ -69,9 +69,10 @@ docker cp php74build:/root/rpmbuild/RPMS./RPMS
 ### 使い方
 
 ```bash
-curl -LO https://raw.githubusercontent.com/tyis/php74-el7-build/main/build.sh
-chmod +x build.sh
-./build.sh
+# -33 の場合（-32 はファイル名を build-7.4.33-32.sh に読み替え）
+curl -LO https://raw.githubusercontent.com/tyis/php74-el7-build/main/build-7.4.33-33.sh
+chmod +x build-7.4.33-33.sh
+./build-7.4.33-33.sh
 ```
 
 完了すると、RPM が `~/rpmbuild/RPMS/x86_64/` に出力されます。
@@ -89,7 +90,7 @@ chmod +x build.sh
 - `libpq-devel` → `libpq5-devel`（-33 で `postgresql-devel` から変更されましたが、その名前のパッケージは EL7 のリポジトリに存在せず、PGDG リポジトリの `libpq5-devel` が実体です）
 4. **PGDG リポジトリの追加**: 上記 `libpq5-devel` の取得元として PostgreSQL 公式 PGDG（EL7 向け 15）を追加します。
 
-調整箇所の差分は `php74.spec.diff`（-33 用）として同梱しています。
+調整箇所の差分は、リビジョン別に `php74-7.4.33-33.spec.diff` / `php74-7.4.33-32.spec.diff` として同梱しています。
 
 ## 実行時の注意（php-pgsql を使う場合）
 
