@@ -1,0 +1,33 @@
+--- php74.spec.orig
++++ rpmbuild/SPECS/php74.spec
+@@ -99,7 +99,7 @@
+ %endif
+ 
+ %global with_dtrace  1
+-%global with_libgd   1
++%global with_libgd   0
+ %global with_libzip  1
+ %global with_zip     0
+ 
+@@ -883,7 +883,7 @@
+ # ucgendat is licensed under OpenLDAP
+ License: PHP and LGPLv2 and BSD and OpenLDAP
+ %if 0%{?rhel}
+-BuildRequires: oniguruma5php-devel
++BuildRequires: oniguruma-devel
+ %else
+ BuildRequires: oniguruma-devel
+ %endif
+@@ -1076,9 +1076,9 @@
+ # All files licensed under PHP version 3.01
+ License: PHP
+ Requires: php-common%{?_isa} = %{version}-%{release}
+-BuildRequires: pkgconfig(icu-i18n) >= 78
+-BuildRequires: pkgconfig(icu-io)   >= 78
+-BuildRequires: pkgconfig(icu-uc)   >= 78
++BuildRequires: pkgconfig(icu-i18n)
++BuildRequires: pkgconfig(icu-io)
++BuildRequires: pkgconfig(icu-uc)
+ %if 0%{?rhel} == 7
+ Obsoletes: php53-intl, php53u-intl, php54-intl, php54w-intl, php55u-intl, php55w-intl, php56u-intl, php56w-intl
+ Obsoletes: php70u-intl, php70w-intl, php71u-intl, php71w-intl, php72u-intl, php72w-intl
