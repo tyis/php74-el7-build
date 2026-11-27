@@ -25,8 +25,10 @@ PHP 7.4 は公式サポートが終了（EOL）しており、2026年11月に公
 
 ## ビルド済み RPM（Releases）
 
-- [v7.4.33-33](https://github.com/tyis/php74-el7-build/releases/tag/v7.4.33-33) — RPM 35個＋SRPM
+- [v7.4.33-33](https://github.com/tyis/php74-el7-build/releases/tag/v7.4.33-33) — RPM 35個＋SRPM＋チェックサム（SHA256SUMS-7.4.33-33.txt）
 - [v7.4.33-32](https://github.com/tyis/php74-el7-build/releases/tag/v7.4.33-32) — RPM 35個＋SRPM＋チェックサム（SHA256SUMS-7.4.33-32.txt）
+
+チェックサムは各 Releases への添付のほか、リポジトリの `checksums/` ディレクトリにもリビジョン別に置いています。
 
 ### 検証結果（共通）
 
